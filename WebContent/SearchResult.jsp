@@ -5,17 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="CS542">
-    <meta name="keywords" content="Abuse,Report,DDS">
+    <meta name="keywords" content="">
     <title>Healthy Food Control System</title>
     <link rel="shortcut icon" href="img/icon.jpg">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
   <!------------------------------------------- Navigation Bar -------------------------------------------------------------->
 	<%@page import = "bean.*, java.util.List" %>
 	<%User user = (User)session.getAttribute("user"); %>
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
       	<div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,7 +25,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="HomePage.jsp">Healthy Food Control System</a>
+          <a class="navbar-brand" href="HomePage.jsp">Healthy Food Control</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -58,34 +59,34 @@
           </div>
         </div>
 		<div class="row">
-      	  <form class="form-horizontal" method="post" action="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=doinsert") %>">
-			<fieldset>
+		<fieldset>
 			<legend>Food Information</legend>
+			<div id = "sliding" class="alert alert-success" role="alert">
+			<p>Successfully Added to your recipe :)</p>
+			</div>
 				<%if(listOfSearchFood.size()!=0) {%>
-				<div class="row">
-        <div id="no-more-tables">
             <table class="col-md-12 table-bordered table-striped table-condensed cf" style="padding:0px; width: 100%;">
         		<thead class="cf">
         			<tr>
-        				<th>Check</th>
+        				<th>Add</th>
         				<th>Food Name</th>
         				<th>Food Catalog</th>
-        				<th>Calorie/100g</th>
-        				<th>Fat/100g</th>
-        				<th>Protein/100g</th>
-        				<th>Carbonhydrate/100g</th>
-        				<th>Fiber/100g</th>
-        				<th>Ash/100g</th>
-        				<th>Sugar/100g</th>
-        				<th>Water/100g</th>
-        				<th>Calcium(mg)/100g</th>
-        				<th>Amount (Unit:g)</th>
+        				<th>Calorie /100g</th>
+        				<th>Fat /100g</th>
+        				<th>Protein /100g</th>
+        				<th>Carbonhydrate /100g</th>
+        				<th>Fiber /100g</th>
+        				<th>Ash /100g</th>
+        				<th>Sugar /100g</th>
+        				<th>Water /100g</th>
+        				<th>Calcium(mg) /100g</th>
+        				<th>Amount <br/>(Unit:g)</th>
         			</tr>
         		</thead>
         		<tbody>
         		<%for (FoodInfo food : listOfSearchFood){ %>
         			<tr>
-        				<td><input type="radio" name="foodid" value="<%=food.getFoodId()%>">   Select</input></td>
+        				<td data-title="Add"><button class="btn btn-primary" id="<%= food.getFoodId()%>" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button></td>
         				<td data-title="Food Name"><%=food.getFoodName() %></td>
         				<td data-title="Food Catalog"><%=food.getCatalog() %></td>
         				<td data-title="Calorie/100g"><%=food.getCalorie() %></td>
@@ -97,34 +98,38 @@
         				<td data-title="Sugar/100g"><%=food.getSugar() %></td>
         				<td data-title="Water/100g"><%=food.getWater() %></td>
         				<td data-title="Calcium(mg)/100g"><%=food.getCalcium()%></td>
-        				<td data-title="Amount (Unit:g)"><input type="text" name="amount" placeholder="amount (unit: g)"></td>
+        				<td data-title="Amount (Unit:g)"><input type="text" id="amt<%=food.getFoodId() %>" name="amount" value="100" placeholder="amount (unit: g)" style="width:100%;"></td>
         			</tr><%} %>
         	   		</tbody>
       	     	</table>
+      	     	</div>
       	     	<legend></legend>
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for="submit"></label>
-				  <div class="col-md-8">
-				    <input type="submit" id="submit" name="submit" value="Add into dietary" class="btn btn-success"></input>
-				    <a href="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=search") %>" id="cancel" name="cancel" class="btn btn-default">Cancel</a>
-				  </div>
-				</div>
-			</fieldset>
-			</form>
-		</div>
+				
+		</fieldset>
    	 </div> 
    </div> <%} else if (listOfSearchFood.size()==0){%>
    <p><font color="red" size="16">No Result Found</font></p>
    <legend></legend>
-   <div class="form-group">
-				  <label class="col-md-4 control-label" for="submit"></label>
-				  <div class="col-md-8">
-				    <a href="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=search") %>" id="cancel" name="cancel" class="btn btn-default">Cancel</a>
-				  </div>
-				</div>
     <%} %>
     
     <script src="js/jquery-1.11.0.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script>
+    	$("#sliding").css("display", "none");
+    	<%for (FoodInfo food : listOfSearchFood){%>
+    		$("#<%=food.getFoodId()%>").click(function(){
+    			var value = $("#amt<%=food.getFoodId()%>").val();
+    			$.post("<%= response.encodeUrl(request.getContextPath() + "/Controller") %>",{
+    				action:"doinsert",
+    				foodid:"<%=food.getFoodId()%>",
+    				amount: value
+    			},function(data){
+    				$("#sliding").css("display", "none");
+    				$("#sliding").slideDown();
+    			});
+    			
+    		});
+    	<%}%>
+    </script>
   </body>
 </html>

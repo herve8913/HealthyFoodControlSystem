@@ -5,17 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="CS542">
-    <meta name="keywords" content="Abuse,Report,DDS">
+    <meta name="keywords" content="">
     <title>Healthy Food Control System</title>
     <link rel="shortcut icon" href="img/icon.jpg">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
   <!------------------------------------------- Navigation Bar -------------------------------------------------------------->
 	<%@page import = "bean.*, java.util.List, java.sql.Date,java.util.Calendar" %>
 	<%User user = (User)session.getAttribute("user"); %>
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
       	<div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,7 +25,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="HomePage.jsp">Healthy Food Control System</a>
+          <a class="navbar-brand" href="HomePage.jsp">Healthy Food Control</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -58,43 +59,40 @@
           </div>
         </div>
 		<div class="row">
-      	  <form class="form-horizontal"  method="post" action="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=doupdate") %>">
 			<fieldset>
-			
 				<legend>Choose Date (Current Date: <%=request.getAttribute("date") %>) </legend><!-- Text input-->
 				<div class="form-group">
-				  <label class="col-md-4 control-label" for="date">Select Date</label>  
+				  <label class="col-md-4 control-label" for="date" style="text-align:right;">Select Date</label>  
 				  <div class="col-md-4">
-				  <input id="date" name="date" type="text" placeholder="yyyy-mm-dd" class="form-control input-md"></input>
+				  <input id="date" name="date" type="date" class="form-control input-md"></input>
 				  </div>
-				  <input id="submit" type="submit" value= "update" class="btn btn-success" > </input>
+				</div>
 				</div>
 				
 				
 				<legend>Daily Dietary</legend>
-				<%if(listOfDietaryFood.size()!=0){ %>
 				<div class="row">
-        <div id="no-more-tables">
-            <table class="col-md-12 table-bordered table-striped table-condensed cf" style="padding:0px; width: 100%;">
+            <div id="wholetable">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf" id="dietary_table" style="padding:0px; width: 100%;">
         		<thead class="cf">
         			<tr>
         				<th>Food Name</th>
         				<th>Food Catalog</th>
-        				<th>Calorie/100g</th>
-        				<th>Fat/100g</th>
-        				<th>Protein/100g</th>
-        				<th>Carbonhydrate/100g</th>
-        				<th>Fiber/100g</th>
-        				<th>Ash/100g</th>
-        				<th>Sugar/100g</th>
-        				<th>Water/100g</th>
-        				<th>Calcium(mg)/100g</th>
-        				<th>Amount (unit: g)</th>
+        				<th>Calorie /100g</th>
+        				<th>Fat /100g</th>
+        				<th>Protein /100g</th>
+        				<th>Carbonhydrate /100g</th>
+        				<th>Fiber /100g</th>
+        				<th>Ash /100g</th>
+        				<th>Sugar /100g</th>
+        				<th>Water /100g</th>
+        				<th>Calcium(mg) /100g</th>
+        				<th>Amount <br/>(unit: g)</th>
         				<th>Date</th>
         				
         			</tr>
         		</thead>
-        		<tbody>
+        		<tbody id="switching">
         		<%for(FoodInfo food : listOfDietaryFood){ %>
         			<tr>
         				<td data-title="Food Name"><%=food.getFoodName() %></td>
@@ -109,15 +107,13 @@
         				<td data-title="Water/100g"><%=food.getWater()%></td>
         				<td data-title="Calcium(mg)/100g"><%=food.getCalcium()%></td>
         				<td data-title="Amount(unit: g)"><%=food.getAmount()%></td>
-        				<td data-title="Date"><%=food.getDate() %></td>
+        				<td data-title="Date"><%=food.getDate().toString().replace('-', '/') %></td>
         			</tr><%} %>
         			    </tbody>
-        			    </table>    			
-			<%}else if(listOfDietaryFood.size()==0){ %>
-			<p><font color="red" >No Result Found On This Day, Please Change Another Day</font></p>
-			<%} %>
+        			    </table>   
+        			    </div> 			
+			<p id="norecord"><font color="red" >No Result Found On This Day, Please Change Another Day</font></p>
 			</fieldset>
-			</form>
 		</div>
    	 </div> 
    </div> 
@@ -125,5 +121,31 @@
     
     <script src="js/jquery-1.11.0.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script>
+    
+    if(<%=(listOfDietaryFood.size()!=0)%>){
+    	$("#norecord").hide();
+    	$("#wholetable").show();
+    }else{
+    	$("#wholetable").hide();
+    	$("#norecord").show();
+    }
+    	$("#date").change(function(){
+    		$.post("<%= response.encodeUrl(request.getContextPath() + "/Controller") %>",{
+    			action:"doupdate",
+    			date: $("#date").val()
+    		}, function(data){
+    			if(data!=""){
+    				$("#norecord").hide();
+        			$("#switching").html(data);
+        			$("#wholetable").show();
+    			}else{
+    				$("#wholetable").hide();
+    				$("#norecord").show();
+    			}
+    		});
+    	});
+    </script>
+    
   </body>
 </html>

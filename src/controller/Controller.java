@@ -112,10 +112,17 @@ public class Controller extends HttpServlet {
 			for (int i=0;i<listOfTrend.size();i++){
 				averageCalorie+= listOfTrend.get(i).getCalorieTotal();
 			}
-			averageCalorie = averageCalorie/listOfTrend.size();
-			request.setAttribute("averageCalorie", averageCalorie);
-			request.setAttribute("listOfTrend", listOfTrend);
-			request.getRequestDispatcher("/Trend.jsp").forward(request, response);
+			if(listOfTrend.size()!=0) {
+				averageCalorie = averageCalorie/listOfTrend.size();
+				request.setAttribute("averageCalorie", averageCalorie);
+				request.setAttribute("listOfTrend", listOfTrend);
+				request.getRequestDispatcher("/Trend.jsp").forward(request, response);
+			}else{
+
+				request.setAttribute("averageCalorie", 0);
+				request.setAttribute("listOfTrend", listOfTrend);
+				request.getRequestDispatcher("/Trend.jsp").forward(request, response);
+			}
 		}
 	}
 
@@ -169,12 +176,31 @@ public class Controller extends HttpServlet {
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}
 		}else if (action.equals("doupdate")){
-			Date date = Date.valueOf(request.getParameter("date"));
+			String date1 = request.getParameter("date");
+			date1.replace('/', '-');
+			Date date = Date.valueOf(date1);
 			User currentUser = (User)session.getAttribute("user");
 			List<FoodInfo> listOfDietaryFood = FoodInfo.getDietary(conn, currentUser.getId(), date);
 			request.setAttribute("listOfDietaryFood", listOfDietaryFood);
+			for(FoodInfo food: listOfDietaryFood){
+				out.write("<tr>");
+				out.write("<td data-title='Food Name'>"+food.getFoodName()+"</td>");
+				out.write("<td data-title='Food Catalog'>"+food.getCatalog()+"</td>");
+				out.write("<td data-title='Calorie/100g'>"+food.getCalorie()+"</td>");
+				out.write("<td data-title='Fat/100g'>"+food.getFat()+"</td>");
+				out.write("<td data-title='Protein/100g'>"+food.getProtein()+"</td>");
+				out.write("<td data-title='Carbonhydrate/100g'>"+food.getCarbhy()+"</td>");
+				out.write("<td data-title='Fiber/100g'>"+food.getFiber()+"</td>");
+				out.write("<td data-title='Ash/100g'>"+food.getAsh()+"</td>");
+				out.write("<td data-title='Sugar/100g'>"+food.getSugar()+"</td>");
+				out.write("<td data-title='Water/100g'>"+food.getWater()+"</td>");
+				out.write("<td data-title='Calcium(mg)/100g'>"+food.getCalcium()+"</td>");
+				out.write("<td data-title='Amount(unit: g)'>"+food.getAmount()+"</td>");
+				out.write("<td data-title='Date'>"+food.getDate().toString().replace('-', '/')+"</td>");
+				out.write("</tr>");
+			}
 			request.setAttribute("date", date);
-			request.getRequestDispatcher("/DailyDietary.jsp").forward(request, response);
+//			request.getRequestDispatcher("/DailyDietary.jsp").forward(request, response);
 			
 		}else if(action.equals("dosearch")){
 			String foodName = request.getParameter("foodname");
@@ -190,6 +216,7 @@ public class Controller extends HttpServlet {
 			int userId = user1.getId();
 			int amount=0;
 			String[] list = request.getParameterValues("amount");
+			System.out.println(list.length);
 			for(String s:list){
 				if(!s.equals("")){
 					amount= Integer.parseInt(s);
@@ -201,10 +228,10 @@ public class Controller extends HttpServlet {
 			System.out.println(userId+" "+foodId+" "+amount);
 			
 			userRecipe.insert();
-			List<FoodInfo> listOfDietaryFood = FoodInfo.getDietary(conn, userId, date);
-			request.setAttribute("listOfDietaryFood", listOfDietaryFood);
-			request.setAttribute("date", date);
-			request.getRequestDispatcher("/DailyDietary.jsp").forward(request, response);
+//			List<FoodInfo> listOfDietaryFood = FoodInfo.getDietary(conn, userId, date);
+//			request.setAttribute("listOfDietaryFood", listOfDietaryFood);
+//			request.setAttribute("date", date);
+//			request.getRequestDispatcher("/DailyDietary.jsp").forward(request, response);
 			
 			
 		}

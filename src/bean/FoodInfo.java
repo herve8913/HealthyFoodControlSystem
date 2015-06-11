@@ -214,7 +214,6 @@ public class FoodInfo {
 			e.printStackTrace();
 		}
 		
-		
 		return listOfFood;
 	}
 	

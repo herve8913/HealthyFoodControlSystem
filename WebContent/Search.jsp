@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="CS542">
-    <meta name="keywords" content="Abuse,Report,DDS">
+    <meta name="keywords" content="">
     <title>Healthy Food Control System</title>
     <link rel="shortcut icon" href="img/icon.jpg">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
   <!------------------------------------------- Navigation Bar -------------------------------------------------------------->
 	<%@page import = "bean.*" %>
 	<%User user = (User)session.getAttribute("user"); %>
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
       	<div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -29,7 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="HomePage.jsp">Healthy Food Control System</a>
+          <a class="navbar-brand" href="HomePage.jsp">Healthy Food Control</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -81,8 +82,8 @@
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="calorierange">Calorie Range</label>  
 				  <div class="col-md-4">
-				  From: <input id="caloriemin" name="caloriemin" type="text" placeholder="minimum calorie (0~9999)" class="form-control input-md" required>
-				  To: <input id="caloriemax" name="caloriemax" type="text" placeholder="maximum calorie (0~9999)" class="form-control input-md" required>
+				  From: <input id="caloriemin" name="caloriemin" type="text" placeholder="minimum calorie (0~9999)" value="0" class="form-control input-md" required>
+				  To: <input id="caloriemax" name="caloriemax" type="text" placeholder="maximum calorie (0~9999)" value="9999" class="form-control input-md" required>
 				  </div>
 				</div>
 				

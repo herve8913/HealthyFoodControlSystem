@@ -5,18 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="CS509 Group1">
-    <meta name="keywords" content="Abuse,Report,DDS">
+    <meta name="keywords" content="">
     <title>Healthy Food Control System</title>
     <link rel="shortcut icon" href="img/icon.jpg">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body class="login">
     <div class="container">    
         <div id="loginbox" style="margin-top:100px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
             <div class="panel panel-info" >
                     <div class="panel-heading">
-                        <div style="font-size:22px"><img src="img/logo.jpg"  class="img-circle">&nbsp;Healthy Food Control System</div>
+                        <div style="font-size:22px"><img src="img/logo.jpg"  class="img-circle">&nbsp;Healthy Food Control</div>
                     </div>     
                     <div style="padding-top:10px" class="panel-body" >
 
