@@ -32,7 +32,7 @@
         	<li class="dropdown">
           	  <a href="#" class="dropdown-toggle" data-toggle="dropdown" ><span class="glyphicon glyphicon-user"></span>Hi, <%=user.getUserFirstName() %><b class="caret"></b></a>
           	  <ul class="dropdown-menu">
-                <li><a href="index.jsp">Log Out</a></li>
+                <li><a href="<%= response.encodeUrl(request.getContextPath() + "/Controller") %>">Log Out</a></li>
               </ul>
             </li>
           </ul>
@@ -52,16 +52,19 @@
      <div class="container" style="padding-top:80px">
 	  <div class="container">
 		<div class="row">
-          <div class="col-xs-6" style="padding:0px">
+          <div class="col-md-8 col-xs-6" style="padding:0px">
             <h3 class="text-left">
                 Food Search Result
             </h3> 
           </div>
+          <div class="col-md-4" style="padding:3px">
+ 			 <input id="filter" type="text" class="form-control" placeholder="Search..." >
+		</div>
         </div>
 		<div class="row">
 		<fieldset>
 			<legend>Food Information</legend>
-			<div id = "sliding" class="alert alert-success" role="alert">
+			<div id = "sliding" class="alert alert-success" role="alert" style="display:none;">
 			<p>Successfully Added to your recipe :)</p>
 			</div>
 				<%if(listOfSearchFood.size()!=0) {%>
@@ -83,7 +86,7 @@
         				<th>Amount <br/>(Unit:g)</th>
         			</tr>
         		</thead>
-        		<tbody>
+        		<tbody class="searchable">
         		<%for (FoodInfo food : listOfSearchFood){ %>
         			<tr>
         				<td data-title="Add"><button class="btn btn-primary" id="<%= food.getFoodId()%>" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button></td>
@@ -115,7 +118,25 @@
     <script src="js/jquery-1.11.0.js"></script>
     <script src="js/bootstrap.js"></script>
     <script>
+    $(document).ready(function () {
     	$("#sliding").css("display", "none");
+		
+	    (function ($) {
+	
+	        $('#filter').keyup(function () {
+	
+	            var rex = new RegExp($(this).val(), 'i');
+	            $('.searchable tr').hide();
+	            $('.searchable tr').filter(function () {
+	                return rex.test($(this).text());
+	            }).show();
+	
+	        })
+	
+	    }(jQuery));
+	
+	});
+    
     	<%for (FoodInfo food : listOfSearchFood){%>
     		$("#<%=food.getFoodId()%>").click(function(){
     			var value = $("#amt<%=food.getFoodId()%>").val();

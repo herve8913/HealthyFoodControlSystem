@@ -2,6 +2,7 @@
 body{
 	font-family: "Times New Roman", Times, serif;
 	font-size: 150%;
+  	padding-top: 50px;
 }
 h3{
 	font-family: "Times New Roman", Times, serif;
@@ -10,4 +11,35 @@ h3{
 p{
 	font-family: "Times New Roman", Times, serif;
 	font-size: 150%;
+}
+
+.jumbotron{
+	background: url(../img/background.jpg) no-repeat top center;
+	color:#fff;
+	height:500px;
+	overflow:none;
+
+}
+
+.jumbotron h1{
+	margin-top:30px;
+	color:#1caa98;
+}
+
+.jumbotron p{
+	font-size:200%;
+	margin:40px 0 40px 0;
+}
+.jumbotron ul li{
+	font-size: 20px;
+	list-style: none;
+	line-height: 2.0em;
+	color:#7fe27f;
+}
+.jumbotron ul{
+	margin:0;
+	padding:0;
+}
+#signupbtn{
+	margin:250px 0 0 0;
 }

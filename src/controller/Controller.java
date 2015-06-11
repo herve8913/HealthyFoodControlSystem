@@ -63,6 +63,7 @@ public class Controller extends HttpServlet {
 
 		String action = request.getParameter("action");
 		if(action==null){
+			request.setAttribute("message", "none");
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 		else if(action.equals("signup")){
@@ -173,6 +174,7 @@ public class Controller extends HttpServlet {
 				request.getRequestDispatcher("/HomePage.jsp").forward(request, response);
 				
 			}else{
+				request.setAttribute("message", "none");
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}
 		}else if (action.equals("doupdate")){

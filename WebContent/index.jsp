@@ -13,39 +13,125 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body class="login">
-    <div class="container">    
-        <div id="loginbox" style="margin-top:100px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
-            <div class="panel panel-info" >
-                    <div class="panel-heading">
-                        <div style="font-size:22px"><img src="img/logo.jpg"  class="img-circle">&nbsp;Healthy Food Control</div>
-                    </div>     
-                    <div style="padding-top:10px" class="panel-body" >
-
-                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-                            
-                        <form id="loginform" class="form-horizontal" role="form" method="post" action="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=dologin") %>">
-                            <div class="input-group panel-title" style="margin-bottom: 10px">Sign in</div>
-                            <div style="margin-bottom: 25px" class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username">                                        
-                                    </div>   
-                            <div style="margin-bottom: 10px" class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                        <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
-                                    </div>                             
-                                <div style="margin-top:10px" class="form-group">
-                                    <!-- Button -->
-                                    <div class="col-sm-12 controls" >
-                                      <input id="btn-login" type="submit" value="Log in" class="btn btn-success"></input>
-									  <a class="omb_forgotPwd" href="#" style="font-size:85%" onclick="$('#loginbox').hide();$('#getpasswordbox').show()">Forgot password?</a>
-									  <div><a class="omb_forgotPwd" href="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=signup") %>" style="font-size:85%" >Sign Up</a></div>
-                                    </div>                                 				
-								</div>
-								   
-                            </form>   
-                        </div>                     
-                    </div>  
+  <!------------------------------------------- Navigation Bar -------------------------------------------------------------->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand labelfont" href="#"> Healthy Food Control</a>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form" method="post" action="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=dologin") %>">
+            <div class="form-group">
+              <input type="text" placeholder="Username" class="form-control" name = "username" required>
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name = "password" required>
+            </div>
+			<div class= "form-group">
+				<input type="submit" class="btn btn-success" value = "Sign in"/>
+			</div>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>  
+  <!------------------------------------------- Nevigation Bar End-------------------------------------------------------------->
+  <% String message = (String)request.getAttribute("message");%>
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-1">
+            <h1>Healthy Food Control</h1>
+            <p>A System Helping You Keep Healthy</p>
+            <ul>
+              <li> <span class="glyphicon glyphicon-ok"></span> Retrieve food nutrient information </li>
+              <li> <span class="glyphicon glyphicon-ok"></span>Control your daily dietary</li>
+              <li> <span class="glyphicon glyphicon-ok"></span>Track your dietary</li>
+            </ul>
+          </div>
+          <div class="col-md-5">
+			<p id="signupbtn"><a class="btn btn-success btn-lg" href="#" role="button" data-toggle = "modal" data-target="#myModal">Get Started Today </a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%if(!message.equals("none")) {%>
+    	<div id = "signupdone" class="alert alert-success" role="alert" style="margin:0;padding:0;">
+			<p>Sign Up Successfully, Please Login with your new account</p>
+		</div><%} %>
+    
+    <div class = "modal fade" id="myModal">
+		<div class= "modal-dialog">
+			<div class= "modal-content">
+			
+				<div class = "modal-header">
+					<button class="close" data-dismiss = "modal">x</button>
+					<h4 class= "modal-title">Sign Up</h4>
+				</div>
+				
+				<div class="modal-body">
+					<form id="signupForm" role="form" method="post" action="<%= response.encodeUrl(request.getContextPath() + "/Controller?action=dosignup") %>">
+						<div class="form-group">
+							<label for="username" class="control-label">Username</label>
+							<input type="text" id="username" name="username" class= "form-control" placeholder="Username" required/>
+						</div>
+						<div class="form-group">
+							<label for="password" class="control-label">Password</label>
+							<input type="password" id="password" name="password" class= "form-control" placeholder="Password" required/>
+						</div>
+						<div class="form-group">
+							<label for="repeatpassword" class="control-label">Repeat Password</label>
+							<input type="password" id="repeatpassword" name="repeatpassword" class= "form-control" placeholder="Repeat Password" required/>
+						</div>
+						<div class="form-group">
+							<label for="firstname" class="control-label">First Name</label>
+							<input type="text" id="firstname" name="firstname" class= "form-control" placeholder="First Name" required/>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="control-label">Last Name</label>
+							<input type="text" id="lastname" name="lastname" class= "form-control" placeholder="Last Name" required/>
+						</div>
+						<div class= "form-group">
+							<label class="control-label" for="gender">Gender</label>
+				  
+				    		<label class="radio-inline" for="radios-0">
+				      		<input type="radio" name="gender" id="radios-0" value="M">
+				      		Male
+				    		</label> 
+				    		<label class="radio-inline" for="radios-1">
+				      		<input type="radio" name="gender" id="radios-1" value="F">
+				      		Female
+				    		</label>
+				  		</div>
+				  		<div class="form-group">
+						  <label class="control-label" for="phone">Phone Number</label>
+						  <input id="phone" name="phone" type="text" placeholder="phone number" class="form-control input-md">
+						</div>
+						<div class="form-group">
+						  <label class="control-label" for="address">Address</label>  
+						  <input id="address" name="address" type="text" placeholder="address" class="form-control input-md">
+						</div>
+						<div class="form-group">
+						  <label class="control-label" for="zipcode">Zip Code</label>  
+						  <input id=""zipcode"" name="zipcode" type="text" placeholder="zipcode" class="form-control input-md">
+						</div>
+						<div class="form-group row">
+							<input id="signingup" type="submit" value="Sign Up" class="btn btn-success col-md-2 col-md-offset-9" />
+						</div>
+					</form>
+				</div>
+				
+				
+			
+			</div>
+		</div>
+	  </div>
+    
         							
         <div id="getpasswordbox" style="display:none; margin-top:100px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <div class="panel panel-info">
@@ -79,5 +165,7 @@
     </div>
     <script src="js/jquery-1.11.0.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script>
+    </script>
   </body>
 </html>

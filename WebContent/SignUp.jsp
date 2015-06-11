@@ -97,7 +97,7 @@
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="zipcode">Zip Code</label>  
 				  <div class="col-md-4">
-				  <input id=""zipcode"" name="zipcode" type="text" placeholder="zipcode" class="form-control input-md">
+				  <input id="zipcode" name="zipcode" type="text" placeholder="zipcode" class="form-control input-md">
 				  </div>
 				</div>
 								 <!-- Button (Double) -->
@@ -105,7 +105,7 @@
 				  <label class="col-md-4 control-label" for="save"></label>
 				  <div class="col-md-8">
 				    <input id="submit" name="submit" value="submit" type="submit" class="btn btn-success"></input>
-				    <a href="index.jsp" id="cancel" name="cancel" class="btn btn-default">Cancel</a>
+				    <a href="<%= response.encodeUrl(request.getContextPath() + "/Controller") %>e" id="cancel" name="cancel" class="btn btn-default">Cancel</a>
 				    
 				  </div>
 				</div>  

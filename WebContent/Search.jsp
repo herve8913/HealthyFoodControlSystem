@@ -37,7 +37,7 @@
         	<li class="dropdown">
           	  <a href="#" class="dropdown-toggle" data-toggle="dropdown" ><span class="glyphicon glyphicon-user"></span>Hi, <%=user.getUserFirstName() %><b class="caret"></b></a>
           	  <ul class="dropdown-menu">
-                <li><a href="index.jsp">Log Out</a></li>
+                <li><a href="<%= response.encodeUrl(request.getContextPath() + "/Controller") %>">Log Out</a></li>
               </ul>
             </li>
           </ul>
